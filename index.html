@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Mentor - المنصة التعليمية</title>
+    <meta name="description" content="منصة The Mentor لعرض الملازم والبوسترات التعليمية للمدرسين بأفضل جودة.">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="glass-nav">
+            <div class="logo-container">
+                <img src="the mentor logo.png" alt="The Mentor Logo" class="logo">
+                <h1>The Mentor</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#subjects">المواد الدراسية</a></li>
+                    <li><a href="#contact">تواصل معنا</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content glass-panel">
+            <h2>مرحباً بك في The Mentor</h2>
+            <p>نقدم لك أفضل الملازم والبوسترات التعليمية المصممة باحترافية عالية لدعم المدرسين والطلاب.</p>
+            <a href="#subjects" class="cta-btn">استعرض أعمالنا</a>
+        </div>
+        <div class="hero-bg-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+        </div>
+    </section>
+
+    <!-- Subjects Section -->
+    <section id="subjects" class="subjects-section">
+        <h2 class="section-title">المواد الدراسية المتاحة</h2>
+        <div class="subjects-grid">
+            
+            <!-- Subject 1 -->
+            <div class="subject-card glass-panel" data-id="subject-1">
+                <div class="card-image-wrapper">
+                    <img src="عينة  من ملزمة مراجعة العلوم المتكاملة/1.png" alt="العلوم المتكاملة" loading="lazy">
+                    <div class="overlay">
+                        <button class="demo-btn" onclick="openDemo('subject-1')">شاهد العينة (Demo)</button>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <h3>مراجعة العلوم المتكاملة</h3>
+                    <p class="price">200 جنيه</p>
+                    <ul class="features">
+                        <li>29 صفحة + غلاف هدية</li>
+                        <li>تسليم PDF باسم ورقم المدرس</li>
+                        <li>التسليم في نفس اليوم</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Subject 2 -->
+            <div class="subject-card glass-panel" data-id="subject-2">
+                <div class="card-image-wrapper">
+                    <img src="عينة من بوسترات الصف الثالث الثانوي في الكيمياء/1.png" alt="كيمياء الصف الثالث الثانوي" loading="lazy">
+                    <div class="overlay">
+                        <button class="demo-btn" onclick="openDemo('subject-2')">شاهد العينة (Demo)</button>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <h3>كيمياء الصف الثالث الثانوي</h3>
+                    <p class="price">300 جنيه</p>
+                    <ul class="features">
+                        <li>30 بوستر + غلاف هدية</li>
+                        <li>تسليم PDF باسم ورقم المدرس</li>
+                        <li>التسليم في نفس اليوم</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Subject 3 -->
+            <div class="subject-card glass-panel" data-id="subject-3">
+                <div class="card-image-wrapper">
+                    <img src="عينة من بوسترات العلوم المتكاملة الصف الاول الثانوي/1.png" alt="بوسترات العلوم المتكاملة" loading="lazy">
+                    <div class="overlay">
+                        <button class="demo-btn" onclick="openDemo('subject-3')">شاهد العينة (Demo)</button>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <h3>بوسترات العلوم المتكاملة (أولى ثانوي)</h3>
+                    <p class="price">200 جنيه</p>
+                    <ul class="features">
+                        <li>15 بوستر + غلاف هدية</li>
+                        <li>تسليم PDF باسم ورقم المدرس</li>
+                        <li>التسليم في نفس اليوم</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Subject 4 -->
+            <div class="subject-card glass-panel" data-id="subject-4">
+                <div class="card-image-wrapper">
+                    <img src="عينة من مراجعة الصف الثاني الاعدادي علوم الترم التاني/1.png" alt="مراجعة علوم ثاني إعدادي" loading="lazy">
+                    <div class="overlay">
+                        <button class="demo-btn" onclick="openDemo('subject-4')">شاهد العينة (Demo)</button>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <h3>مراجعة العلوم (ثاني إعدادي)</h3>
+                    <p class="price">100 جنيه</p>
+                    <ul class="features">
+                        <li>23 صفحة + غلاف هدية</li>
+                        <li>تسليم PDF باسم ورقم المدرس</li>
+                        <li>التسليم في نفس اليوم</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Modal / Lightbox for Demo -->
+    <div id="demo-modal" class="modal">
+        <div class="modal-content glass-panel">
+            <span class="close-btn" onclick="closeDemo()">&times;</span>
+            <div class="modal-body">
+                <div class="slider-container">
+                    <div class="slider" id="modal-slider">
+                        <!-- Images will be injected here -->
+                    </div>
+                    <button class="slider-btn prev-btn" onclick="moveSlide(-1)">&#10095;</button>
+                    <button class="slider-btn next-btn" onclick="moveSlide(1)">&#10094;</button>
+                </div>
+                <div class="modal-details" id="modal-details">
+                    <!-- Details will be injected here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section glass-panel">
+        <h2>تواصل معنا للطلب</h2>
+        <div class="contact-info">
+            <p><strong>رقم التحويل (إنستا باي أو فودافون كاش):</strong> <span class="highlight">01020634409</span></p>
+            <p><strong>صفحة الفيس بوك:</strong> <a href="https://www.facebook.com/thementorahmed" target="_blank" class="fb-link">The Mentor - Ahmed</a></p>
+            <p class="note">ملاحظة: مع إمكانية وضع الإطار الخاص بالمدرس أو تصميم إطار جديد بسعر رمزي.</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 The Mentor. جميع الحقوق محفوظة.</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
