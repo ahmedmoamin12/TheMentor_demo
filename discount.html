@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Mentor - Gaming Discount</title>
+    <meta name="description" content="احصل على خصمك العشوائي على الملازم والبوسترات">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .discount-container {
+            max-width: 600px;
+            margin: 120px auto 50px;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .gaming-title {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 800;
+            color: #fcd34d; /* لون ذهبي هادئ */
+            text-shadow: 0 0 15px rgba(252, 211, 77, 0.2);
+            letter-spacing: 1px;
+        }
+
+        .description-box {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px dashed rgba(56, 189, 248, 0.5);
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .description-box span {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: right;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 8px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--glass-border);
+            color: white;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+        }
+
+        .spin-btn {
+            width: 100%;
+            padding: 15px;
+            margin-top: 10px;
+            background: linear-gradient(135deg, #ec4899, #8b5cf6);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-family: inherit;
+            box-shadow: 0 5px 15px rgba(236, 72, 153, 0.4);
+            text-transform: uppercase;
+        }
+
+        .spin-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(236, 72, 153, 0.6);
+        }
+
+        .spin-btn:disabled {
+            background: #475569;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .result-box {
+            display: none;
+            margin-top: 30px;
+            padding: 30px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(56,189,248,0.1), rgba(139,92,246,0.1));
+            border: 2px solid var(--accent-color);
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .discount-value {
+            font-size: 4rem;
+            font-weight: 800;
+            color: #10b981;
+            text-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+            margin: 10px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .discount-value span {
+            font-size: 2rem;
+        }
+
+        .success-msg {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            margin-top: 15px;
+        }
+
+        /* Number rolling animation */
+        .rolling {
+            animation: shake 0.1s infinite;
+            color: var(--accent-color) !important;
+        }
+
+        @keyframes shake {
+            0% { transform: translateY(-2px); }
+            50% { transform: translateY(2px); }
+            100% { transform: translateY(-2px); }
+        }
+
+        .wheel-container {
+            display: none;
+            margin: 30px auto;
+            text-align: center;
+            position: relative;
+        }
+
+        .spin-wheel {
+            width: 250px;
+            height: 250px;
+            object-fit: contain;
+            border-radius: 50%;
+            box-shadow: 0 0 30px rgba(236, 72, 153, 0.4);
+            transition: transform 3s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+        
+        .pointer {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0; 
+            height: 0; 
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 30px solid var(--accent-color);
+            z-index: 10;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Main Content -->
+    <div class="discount-container glass-panel">
+        <div style="text-align: center; margin-bottom: 25px;">
+            <img src="the mentor logo.png" alt="The Mentor Logo" style="max-width: 130px; border-radius: 50%; box-shadow: 0 0 20px rgba(56, 189, 248, 0.5);">
+        </div>
+        
+        <h2 class="gaming-title">🎁 عجلة الحظ للمدرسين 🎮</h2>
+        
+        <div class="description-box">
+            يتوفر لدينا الآن: 
+            <br>
+            <span>مذكرات علوم تانية اعدادي وتالتة اعدادي</span>
+            <br>
+            <span>وعلوم متكاملة اولي ثانوي</span>
+            <br>
+            <span>وكيمياء 3 ثانوي</span>
+            <br><br>
+            سجل بياناتك الآن واحصل على خصمك العشوائي!
+        </div>
+
+        <form id="discountForm">
+            <div class="form-group">
+                <label for="teacherName">اسم المدرس</label>
+                <input type="text" id="teacherName" class="form-control" required placeholder="أدخل اسمك ثلاثي">
+            </div>
+            
+            <div class="form-group">
+                <label for="teacherPhone">رقم الموبايل</label>
+                <input type="tel" id="teacherPhone" class="form-control" required placeholder="010XXXXXXXX" pattern="[0-9]{11}">
+            </div>
+
+            <button type="submit" id="spinBtn" class="spin-btn">احصل على الخصم الآن 🎲</button>
+        </form>
+
+        <div id="wheelContainer" class="wheel-container">
+            <div class="pointer"></div>
+            <svg id="spinWheel" class="spin-wheel" viewBox="-100 -100 200 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- Slices -->
+                <path d="M0,0 L0,-100 A100,100 0 0,1 70.71,-70.71 Z" fill="#ec4899"/>
+                <path d="M0,0 L70.71,-70.71 A100,100 0 0,1 100,0 Z" fill="#8b5cf6"/>
+                <path d="M0,0 L100,0 A100,100 0 0,1 70.71,70.71 Z" fill="#38bdf8"/>
+                <path d="M0,0 L70.71,70.71 A100,100 0 0,1 0,100 Z" fill="#10b981"/>
+                <path d="M0,0 L0,100 A100,100 0 0,1 -70.71,70.71 Z" fill="#84cc16"/>
+                <path d="M0,0 L-70.71,70.71 A100,100 0 0,1 -100,0 Z" fill="#facc15"/>
+                <path d="M0,0 L-100,0 A100,100 0 0,1 -70.71,-70.71 Z" fill="#f97316"/>
+                <path d="M0,0 L-70.71,-70.71 A100,100 0 0,1 0,-100 Z" fill="#ef4444"/>
+
+                <!-- Text -->
+                <text text-anchor="middle" font-size="10" font-weight="bold" fill="white" font-family="Cairo" transform="rotate(22.5) translate(0, -60) rotate(90)">خصم 10%</text>
+                <text text-anchor="middle" font-size="10" font-weight="bold" fill="white" font-family="Cairo" transform="rotate(67.5) translate(0, -60) rotate(90)">خصم 20%</text>
+                <text text-anchor="middle" font-size="10" font-weight="bold" fill="white" font-family="Cairo" transform="rotate(112.5) translate(0, -60) rotate(90)">خصم 30%</text>
+                <text text-anchor="middle" font-size="10" font-weight="bold" fill="white" font-family="Cairo" transform="rotate(157.5) translate(0, -60) rotate(90)">ملزمة هدية</text>
+                <text text-anchor="middle" font-size="10" font-weight="bold" fill="white" font-family="Cairo" transform="rotate(202.5) translate(0, -60) rotate(90)">خصم 40%</text>
+                <text text-anchor="middle" font-size="10" font-weight="bold" fill="white" font-family="Cairo" transform="rotate(247.5) translate(0, -60) rotate(90)">بوستر هدية</text>
+                <text text-anchor="middle" font-size="10" font-weight="bold" fill="white" font-family="Cairo" transform="rotate(292.5) translate(0, -60) rotate(90)">خصم 50%</text>
+                <text text-anchor="middle" font-size="10" font-weight="bold" fill="white" font-family="Cairo" transform="rotate(337.5) translate(0, -60) rotate(90)">خصم 70%</text>
+                
+                <!-- Center Circle -->
+                <circle cx="0" cy="0" r="15" fill="#1e293b" stroke="#fff" stroke-width="2"/>
+                <circle cx="0" cy="0" r="5" fill="#fcd34d"/>
+            </svg>
+        </div>
+
+        <div id="resultBox" class="result-box">
+            <h3>مبروك يا <span id="resName" style="color:var(--accent-color);"></span>!</h3>
+            <p>لقد حصلت على خصم بقيمة:</p>
+            <div class="discount-value" id="discountValue">0<span>%</span></div>
+            <p class="success-msg">تم تسجيل بياناتك بنجاح. تواصل معنا للحصول على الملازم بالخصم الخاص بك.</p>
+        </div>
+        
+
+    </div>
+
+    <!-- Background Shapes -->
+    <div class="hero-bg-shapes" style="position: fixed;">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3" style="width: 250px; height: 250px; background: #ec4899; top: 40%; left: 10%; animation-delay: -2s;"></div>
+    </div>
+
+    <script>
+        document.getElementById('discountForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('teacherName').value.trim();
+            const phone = document.getElementById('teacherPhone').value.trim();
+            const btn = document.getElementById('spinBtn');
+            const resultBox = document.getElementById('resultBox');
+            const discountValueEl = document.getElementById('discountValue');
+            const resNameEl = document.getElementById('resName');
+
+            if(!name || !phone) return;
+
+            // Disable form
+            btn.disabled = true;
+            document.getElementById('teacherName').disabled = true;
+            document.getElementById('teacherPhone').disabled = true;
+
+            // Determine final prize
+            const prizes = [
+                { text: "خصم 10%", value: 10, weight: 30, index: 0 },
+                { text: "خصم 20%", value: 20, weight: 25, index: 1 },
+                { text: "خصم 30%", value: 30, weight: 15, index: 2 },
+                { text: "ملزمة هدية", value: "ملزمة هدية", weight: 10, index: 3 },
+                { text: "خصم 40%", value: 40, weight: 8, index: 4 },
+                { text: "بوستر هدية", value: "بوستر هدية", weight: 6, index: 5 },
+                { text: "خصم 50%", value: 50, weight: 4, index: 6 },
+                { text: "خصم 70%", value: 70, weight: 2, index: 7 }
+            ];
+
+            let randomNum = Math.random() * 100;
+            let currentWeight = 0;
+            let selectedPrize = null;
+
+            for (let prize of prizes) {
+                currentWeight += prize.weight;
+                if (randomNum <= currentWeight) {
+                    selectedPrize = prize;
+                    break;
+                }
+            }
+
+            // Hide form and show wheel
+            document.getElementById('discountForm').style.display = 'none';
+            const wheelContainer = document.getElementById('wheelContainer');
+            const spinWheel = document.getElementById('spinWheel');
+            
+            wheelContainer.style.display = 'block';
+            resNameEl.innerText = name;
+            
+            // Random spin 
+            const offset = (Math.random() * 30) - 15;
+            const targetRotation = 360 - (selectedPrize.index * 45 + 22.5) + offset;
+            const randomDegree = (360 * 5) + targetRotation;
+            
+            // trigger reflow
+            void spinWheel.offsetWidth;
+            
+            spinWheel.style.transform = `rotate(${randomDegree}deg)`;
+            
+            // Wait 3 seconds for wheel to stop
+            setTimeout(() => {
+                resultBox.style.display = 'block';
+                
+                if (typeof selectedPrize.value === 'number') {
+                    discountValueEl.innerHTML = selectedPrize.value + '<span>%</span>';
+                    // Color code based on high/low discount
+                    if(selectedPrize.value >= 40) {
+                        discountValueEl.style.color = '#fbbf24'; // Gold for high discount
+                        discountValueEl.style.textShadow = '0 0 20px rgba(251, 191, 36, 0.5)';
+                    } else {
+                        discountValueEl.style.color = '#10b981'; // Green for normal discount
+                    }
+                } else {
+                    discountValueEl.innerHTML = selectedPrize.value;
+                    discountValueEl.style.fontSize = '3rem';
+                    discountValueEl.style.color = '#fcd34d';
+                    discountValueEl.style.textShadow = '0 0 20px rgba(252, 211, 77, 0.5)';
+                }
+
+                // Send data to Excel (Webhook)
+                sendDataToExcel(name, phone, selectedPrize.value);
+            }, 3000);
+        });
+
+        function sendDataToExcel(name, phone, discount) {
+            const webhookUrl = "https://sheetdb.io/api/v1/d31iezc3iexan"; 
+            
+            const finalDiscountText = (typeof discount === 'number') ? discount + "%" : discount;
+
+            const payload = {
+                data: {
+                    name: name,
+                    phone: phone,
+                    discount: finalDiscountText,
+                    date: new Date().toLocaleString('en-GB')
+                }
+            };
+
+            fetch(webhookUrl, {
+                method: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(response => response.json())
+            .then(data => console.log("تم الإرسال بنجاح!", data))
+            .catch(error => console.error("Error:", error));
+        }
+    </script>
+</body>
+</html>
